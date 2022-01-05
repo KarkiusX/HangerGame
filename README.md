@@ -1,1 +1,1 @@
-# HangerGame
+# HangGame
