@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.UUID;
+
 public class Game {
 
     enum GameStates{
@@ -12,7 +14,7 @@ public class Game {
 
     private final int MAX_GUESSES = 10;
 
-    private boolean[] revealedLetters;
+    private char[] revealedLetters;
 
     private HangerInfo hangerInfo;
 
@@ -20,7 +22,9 @@ public class Game {
 
     private GameStates gameStates;
 
-    private int missedGuests;
+    private int guesses;
+
+    private String gameId;
 
 
     public Game(Player player)
@@ -29,10 +33,16 @@ public class Game {
 
         hangerInfo = WordCollection.SelectRandomHangerInfo();
 
-        revealedLetters = new boolean[hangerInfo.word.length];
+        revealedLetters = new char[hangerInfo.word.length];
 
         gameStates = GameStates.Started;
 
+        gameId = UUID.randomUUID().toString();
+
+    }
+    public String GetGameId()
+    {
+        return gameId;
     }
     public boolean Guessed(char a)
     {
@@ -43,29 +53,30 @@ public class Game {
             {
                 guess = true;
 
-                revealedLetters[i] = true;
+                revealedLetters[i] = a;
             }
         }
-        if(!guess)
-            missedGuests++;
+        guesses++;
 
         tryFinishGame();
         return guess;
     }
     public void tryFinishGame()
     {
-        if(missedGuests != MAX_GUESSES)
+        if(guesses == MAX_GUESSES)
         {
             gameStates = GameStates.Lost;
+            Instance.UpdateGame( gameId, this);
             return;
         }
 
         for(int i = 0; i < revealedLetters.length; i++)
         {
-            if(!revealedLetters[i])
+            if(revealedLetters[i] == 0)
                 return;
         }
         gameStates = GameStates.Won;
+        Instance.UpdateGame( gameId, this);
     }
     public String GetGameInfo() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -73,6 +84,7 @@ public class Game {
         ObjectNode objectNode = objectMapper.createObjectNode();
 
         objectNode.put("Word", FormatCurrentProgress());
+        objectNode.put("Guesses", guesses);
         objectNode.put("Description", hangerInfo.description);
         objectNode.put("GameState", gameStates.toString());
 
@@ -87,7 +99,7 @@ public class Game {
 
         for(int i =0; i < hangerInfo.word.length; i++)
         {
-            if(revealedLetters[i])
+            if(revealedLetters[i] != 0)
                 currentRevealedWord += revealedLetters[i];
             else
                 currentRevealedWord += "-";
