@@ -1,15 +1,33 @@
 import './GameStyle.css';
-import { Link } from "react-router-dom";
+import { API } from '../Api/Base'
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 function Menu()
 {
+    const [serverAlive, setAlive] = useState(true)
+
+    let navigate = useNavigate();
+
+    const CheckConnection = async () => {
+        await fetch("http://158.129.21.109:8080/").then(() => {
+            navigate("game");
+        })
+        .catch(() => {
+            setAlive(false);
+        })
+    }
+
     return(
         <div className="middle">
             <h2 className="text-nowrap">Žaidimas Hangman</h2>
             <div className="d-flex flex-column text-nowrap pt-3">
-                <Link to="/game" className="text-decoration-none">
-                <button type="button" class="btn btn-outline-primary">Pradėti žaidimą</button>
-                </Link>
+                <div>
+                <button type="button" class="btn btn-outline-primary" onClick={() => CheckConnection()}>Pradėti žaidimą</button>
+                {serverAlive !== true &&
+                  <p className="error-connect">Serverio klaida, bandykite dar karta po kelių sekundžių</p>
+                }
+                </div>
                 <h4 className='pt-5 pb-3'>Instrukcijos:</h4>
 
                 <p className="fw-bold">Žodis turi būti atspėjamas per mažiau nei 10 bandymų</p>

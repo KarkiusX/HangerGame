@@ -15,13 +15,27 @@ export class Game extends React.Component {
         let righthand = <line x1="50%" y1="30%" x2="85%" y2="50%" stroke="rgb(0, 0, 0)" stroke-width="5"/>
         let leftleg = <line x1="50%" y1="70%" x2="35%" y2="90%" stroke="rgb(0, 0, 0)" stroke-width="5"/>;
         let rightleg = <line x1="50%" y1="70%" x2="65%" y2="90%" stroke="rgb(0, 0, 0)" stroke-width="5"/>
+        let leftEye =  [
+                       <line x1="43%" y1="20%" x2="46%" y2="15%" stroke="rgb(255, 0, 0)" stroke-width="5"/>,
+                       <line x1="46%" y1="20%" x2="43%" y2="15%" stroke="rgb(255, 0, 0)" stroke-width="5"/>
+                        ]
+        let rightEye =  [
+            <line x1="53%" y1="20%" x2="56%" y2="15%" stroke="rgb(255, 0, 0)" stroke-width="5"/>,
+            <line x1="56%" y1="20%" x2="53%" y2="15%" stroke="rgb(255, 0, 0)" stroke-width="5"/>
+                ]
+        let nose = <line x1="50%" y1="20%" x2="50%" y2="25%" stroke="rgb(255, 0, 0)" stroke-width="5"/>
+        let mouth = <line x1="48%" y1="28%" x2="52%" y2="28%" stroke="rgb(255, 0, 0)" stroke-width="5"/>
         let dead_man = [
             head,
             spine,
             lefthand,
             righthand,
             leftleg,
-            rightleg
+            rightleg,
+            leftEye,
+            rightEye,
+            nose,
+            mouth
         ]
         this.state = { info: undefined, parts: dead_man, cells: []};
 
@@ -148,6 +162,7 @@ function BuildMan(props)
 {
     let alive_man = [];
     for (var i = 0; i < props.mistakes; i++) {
+        console.log(props.parts[i]);
        alive_man.push(props.parts[i]);
     }
     return alive_man;
