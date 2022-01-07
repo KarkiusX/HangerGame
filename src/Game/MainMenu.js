@@ -33,6 +33,7 @@ function Menu()
 
                 <p className="fw-bold">Žodis turi būti atspėjamas per mažiau nei 10 bandymų</p>
                 <p className="fw-bold">Jeigu bandote rašyti tą pačia raidę, užsiskaito kaip bandymas</p>
+                <p className="fw-bold">Spėjamos raidės nebūtinai turi būti didžiosios arba mažosios</p>
              </div>
         </div>
     );
