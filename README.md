@@ -29,7 +29,7 @@ Paprastas žaidimas, kuriame reikia atspėti nustatytą žodi, per tam tikra kie
 
 ### Aplikacijos paleidimas
 
-1. Paspaudžiame ant aplikaciją
+1. Paspaudžiame ant aplikacijos
 2. Aplikacija instaliuojasi ir turėtu atsirasti darbalaukyje
 
 Jau subuildinta aplikaciją galime rasti čia
