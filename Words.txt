@@ -1,4 +1,4 @@
-Tankas : Susije su karu
+Tankas : Susije su karu, Šautuvas : Susije su karu
 Kareivis : Susije su karu
 traktoristas : Transporto priemonė
 Laivas : Yra ant vandens

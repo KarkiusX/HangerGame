@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Instance {
     private static Map<String, Game> games = new HashMap<>();
-   // private static List<Player> playerList = new ArrayList<>();
     public static String StartGame()
     {
         String uid = UUID.randomUUID().toString();

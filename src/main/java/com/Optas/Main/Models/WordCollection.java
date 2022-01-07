@@ -31,16 +31,27 @@ public class WordCollection {
         return wordsWithDescription.get(wordIndex);
     }
     public static void LoadWords() throws IOException {
+
+        File file = new File(wordsFileName);
+
+        if(!file.exists())
+        {
+            file.createNewFile();
+            return;
+        }
         FileInputStream readWords = new FileInputStream(wordsFileName);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(readWords, "UTF-8"));
 
         bufferedReader.lines().forEach(line -> {
-            String[] words = line.split(":");
+            String[] words = line.split(",");
 
-            if(words[0].trim().length() > Game.MAX_GUESSES)
-                return;
+            for(String word : words) {
+                String[] wordWithDesc = word.split(":");
+                if (wordWithDesc[0].trim().length() > Game.MAX_GUESSES)
+                    return;
 
-            AddWord(words[0].trim().toLowerCase(), words[1].trim().toLowerCase());
+                AddWord(wordWithDesc[0].trim().toLowerCase(), wordWithDesc[1].trim().toLowerCase());
+            }
         });
         bufferedReader.close();
     }
