@@ -14,20 +14,21 @@ export class Game extends React.Component {
         this.reload = this.reload.bind(this);
         this.RemoveGame = this.RemoveGame.bind(this);
 
+        console.log(process.env);
+
       }
     reload(e)
     {
         this.RemoveGame();
     }
-    async RemoveGame()
+    RemoveGame()
     {
         let gameId = localStorage.getItem("gameId");
         var data = new Object();
         data.gameId = gameId;
         var dataJson = JSON.stringify(data);
-        await API.put("/disconnect/" + dataJson).then(() => {
-            localStorage.removeItem("gameId");
-        })
+        localStorage.removeItem("gameId");
+        API.put("/disconnect", dataJson);
     }
     async componentDidMount()
     {
@@ -37,6 +38,7 @@ export class Game extends React.Component {
     async componentWillUnmount()
     {
         window.removeEventListener("beforeunload", this.reload);
+        console.log("Hmm");
         this.RemoveGame();
     }
     async submitData(event)
@@ -55,8 +57,6 @@ export class Game extends React.Component {
         data.guessingLetter = word;
 
         var dataJson = JSON.stringify(data);
-
-        console.log(dataJson);
 
         await API.put("/game", dataJson).then((res) => {
             this.setState({info : res.data});

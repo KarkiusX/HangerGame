@@ -10,11 +10,10 @@ function Menu()
     let navigate = useNavigate();
 
     const CheckConnection = async () => {
-        await fetch("http://158.129.21.109:8080/connect").then((res) => {
+        await fetch(process.env.REACT_APP_SERVER_IP + "/connect").then((res) => {
             navigate("game");
         })
-        .catch(error => {
-            console.log(error);
+        .catch(() => {
             setAlive(false);
         })
     
