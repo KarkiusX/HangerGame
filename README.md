@@ -34,7 +34,7 @@ Aprašymas nėra būtinas, nepamirškite padėti kablelį.
 ### Serverio paleidimas
 
 1. Atsidarome terminalą ir nusinaviguojam, kur yra sukurtas mūsų serveris, jar formatu
-2. Parašome terminale 'java -jar HangServer.jar'
+2. Parašome terminale 'java -jar [Name].jar'
 
 
 Jau subuildinta aplikaciją galime rasti čia
