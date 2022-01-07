@@ -24,8 +24,6 @@ public class Instance {
     public static void RemoveGame(String gameId) {
         if(!games.containsKey(gameId))
             return;
-
-        System.out.println("RemovedGame");
         games.remove(gameId);
     }
 }
