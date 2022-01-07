@@ -3,9 +3,7 @@ package com.Optas.Main.Models;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 
@@ -34,17 +32,16 @@ public class WordCollection {
     }
     public static void LoadWords() throws IOException {
         FileInputStream readWords = new FileInputStream(wordsFileName);
-        Scanner scanner = new Scanner(readWords);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(readWords, "UTF-8"));
 
-        while(scanner.hasNextLine())
-        {
-           String line = scanner.nextLine();
+        bufferedReader.lines().forEach(line -> {
+            String[] words = line.split(":");
 
-           String[] words = line.split(":");
+            if(words[0].trim().length() > Game.MAX_GUESSES)
+                return;
 
-           AddWord(words[0].trim(), words[1].trim());
-
-           System.out.println(words[0].length());
-        }
+            AddWord(words[0].trim().toLowerCase(), words[1].trim().toLowerCase());
+        });
+        bufferedReader.close();
     }
 }

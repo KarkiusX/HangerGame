@@ -4,15 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.UUID;
-
 public class Game {
 
     enum GameStates{
         Started, Lost, Won
     }
-
-    private final int MAX_GUESSES = 10;
+    public static final int MAX_GUESSES = 10;
 
     private char[] revealedLetters;
 
@@ -23,8 +20,10 @@ public class Game {
     private GameStates gameStates;
 
     private int guesses;
+    private int incorrectGuesses;
 
-    private String gameId;
+
+    private String lettersGuessed;
 
 
     public Game(Player player)
@@ -37,16 +36,21 @@ public class Game {
 
         gameStates = GameStates.Started;
 
-        gameId = UUID.randomUUID().toString();
+        lettersGuessed = "";
 
     }
-    public String GetGameId()
+
+    public boolean GameFinished()
     {
-        return gameId;
+        if(gameStates == GameStates.Lost || gameStates == GameStates.Won)
+            return true;
+
+        return false;
     }
     public boolean Guessed(char a)
     {
         boolean guess = false;
+        lettersGuessed += a + " ";
         for(int i = 0; i < hangerInfo.word.length; i++)
         {
             if(hangerInfo.word[i] == a)
@@ -58,15 +62,17 @@ public class Game {
         }
         guesses++;
 
+        if(!guess)
+            incorrectGuesses = guesses;
+
         tryFinishGame();
         return guess;
     }
-    public void tryFinishGame()
+    private void tryFinishGame()
     {
         if(guesses == MAX_GUESSES)
         {
             gameStates = GameStates.Lost;
-            Instance.UpdateGame( gameId, this);
             return;
         }
 
@@ -76,17 +82,26 @@ public class Game {
                 return;
         }
         gameStates = GameStates.Won;
-        Instance.UpdateGame( gameId, this);
     }
-    public String GetGameInfo() throws JsonProcessingException {
+    public String GetGameInfo(boolean includeId) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         ObjectNode objectNode = objectMapper.createObjectNode();
 
+        if(includeId)
+            objectNode.put("gameId", playingPlayer.getGameId());
+
         objectNode.put("Word", FormatCurrentProgress());
         objectNode.put("Guesses", guesses);
+        objectNode.put("ig", incorrectGuesses);
         objectNode.put("Description", hangerInfo.description);
+        objectNode.put("LettersGuessed", lettersGuessed);
         objectNode.put("GameState", gameStates.toString());
+
+        if(gameStates == GameStates.Lost)
+        {
+            objectNode.put("cw", String.valueOf(hangerInfo.word));
+        }
 
         String jsonData = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode);
 

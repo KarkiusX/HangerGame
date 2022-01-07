@@ -1,1 +1,6 @@
 Tankas : Susije su karu
+Kareivis : Susije su karu
+traktoristas : Transporto priemonė
+Laivas : Yra ant vandens
+Valtis : Yra ant vandens
+Bėgikas : Yra trasoje

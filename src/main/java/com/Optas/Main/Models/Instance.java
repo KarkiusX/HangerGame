@@ -8,18 +8,24 @@ public class Instance {
    // private static List<Player> playerList = new ArrayList<>();
     public static String StartGame()
     {
-        Player player = new Player();
+        String uid = UUID.randomUUID().toString();
+        Player player = new Player(uid);
         Game game = new Game(player);
-        String uniqueGameId = game.GetGameId();
-        games.put(uniqueGameId, game);
-        return uniqueGameId;
+        games.put(uid, game);
+        return uid;
     }
     public static Game GetGame(String gameId)
     {
+        if(!games.containsKey(gameId))
+            return null;
+
         return games.get(gameId);
     }
-    public static void UpdateGame(String gameId, Game game)
-    {
-        games.put(gameId, game);
+    public static void RemoveGame(String gameId) {
+        if(!games.containsKey(gameId))
+            return;
+
+        System.out.println("RemovedGame");
+        games.remove(gameId);
     }
 }
