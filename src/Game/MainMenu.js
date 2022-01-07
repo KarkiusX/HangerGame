@@ -10,12 +10,14 @@ function Menu()
     let navigate = useNavigate();
 
     const CheckConnection = async () => {
-        await fetch("http://158.129.21.109:8080/").then(() => {
+        await fetch("http://158.129.21.109:8080/connect").then((res) => {
             navigate("game");
         })
-        .catch(() => {
+        .catch(error => {
+            console.log(error);
             setAlive(false);
         })
+    
     }
 
     return(
@@ -23,7 +25,7 @@ function Menu()
             <h2 className="text-nowrap">Žaidimas Hangman</h2>
             <div className="d-flex flex-column text-nowrap pt-3">
                 <div>
-                <button type="button" class="btn btn-outline-primary" onClick={() => CheckConnection()}>Pradėti žaidimą</button>
+                <button type="button" className="btn btn-outline-primary" onClick={() => CheckConnection()}>Pradėti žaidimą</button>
                 {serverAlive !== true &&
                   <p className="error-connect">Serverio klaida, bandykite dar karta po kelių sekundžių</p>
                 }

@@ -5,18 +5,18 @@ import App from './App';
 import {Game} from './Game/GameCanvas'
 import reportWebVitals from './reportWebVitals';
 
-import { BrowserRouter, Routes,Route } from "react-router-dom";
+import { BrowserRouter, Routes,Route, HashRouter } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
             <Route path="/" element={<App />} />
             <Route path="/game" element={<Game/>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
