@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { API } from '../Api/Base'
 import './GameStyle.css';
 
@@ -13,8 +14,6 @@ export class Game extends React.Component {
         this.StartGame = this.StartGame.bind(this);
         this.reload = this.reload.bind(this);
         this.RemoveGame = this.RemoveGame.bind(this);
-
-        console.log(process.env);
 
       }
     reload(e)
@@ -38,7 +37,6 @@ export class Game extends React.Component {
     async componentWillUnmount()
     {
         window.removeEventListener("beforeunload", this.reload);
-        console.log("Hmm");
         this.RemoveGame();
     }
     async submitData(event)
@@ -70,7 +68,7 @@ export class Game extends React.Component {
             localStorage.setItem("gameId", r.data.gameId);
             this.setState({info : r.data});
             this.GetGameInfo(r.data);
-           }).catch(e => {
+           }).catch(() => {
                window.alert("Serveris turi laikinu problemų! Bandykite prisijungti vėliau")
            })
     }
@@ -153,10 +151,12 @@ export class Game extends React.Component {
                     }
                     {gameState === "Won" && <div>
                         <h4>Sveikiname, išvengiatė kartuvių!</h4>
-                        <button type="button" className="btn btn-outline-dark" onClick={this.StartGame}>Žaisti per naujo</button>
+                        <Link to={'/'}><button type="button" className="btn btn-outline-dark">Baigti žaidimą</button></Link>
+                        <button type="button" className="btn btn-outline-dark">Žaisti per naujo</button>
                     </div>}
                     {gameState === "Lost" && <div>
                         <h4>Nepavyko išvengti kartuvių!</h4>
+                        <Link to={'/'}><button type="button" className="btn btn-outline-dark">Baigti žaidimą</button></Link>
                         <button type="button" className="btn btn-outline-dark" onClick={this.StartGame}>Žaisti per naujo</button>
                     </div>}
                  </div>
