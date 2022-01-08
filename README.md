@@ -40,4 +40,3 @@ https://github.com/KarkiusX/HangerGame/releases/latest
 
 Karolis Stasaitis, karoliss140@gmail.com
 
->>>>>>> f423d51105346e1408f30c8b67f19afa29148ffa
