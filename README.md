@@ -36,6 +36,12 @@ Aprašymas nėra būtinas, nepamirškite padėti kablelį.
 1. Atsidarome terminalą ir nusinaviguojam, kur yra sukurtas mūsų serveris, jar formatu
 2. Parašome terminale 'java -jar [Name].jar'
 
+### Testų paleidimas
+
+1. Atsidarome terminalą ir nusinaviguojam į projekto vietą.
+2. Parašome 'gradlew test'
+3. Jeigu testo nepraeina, pavaizduos terminale.
+
 
 Jau subuildinta aplikaciją galime rasti čia
 
