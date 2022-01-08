@@ -1,6 +1,6 @@
 # Projektas "Hangman"
 
-Hangman žaidimas, serverinė dalyje
+Hangman žaidimas, serverinė dalis
 
 ## Projekto paleidimas
 
