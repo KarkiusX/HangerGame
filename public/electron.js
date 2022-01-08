@@ -1,7 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const dev = require("electron-is-dev");
-const { env } = require('process');
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -11,8 +10,8 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
-  win.loadURL(dev ? env.REACT_APP_SERVER_IP : `file://${__dirname}/../build/index.html`)
+  console.log(env);
+  win.loadURL(dev ? "http://158.129.21.109:3000" : `file://${__dirname}/../build/index.html`)
 }
 
 app.whenReady().then(() => {

@@ -64,7 +64,7 @@ export class Game extends React.Component {
     }
     async StartGame()
     {
-        await API.post("/game").then( r => {
+        await API.get("/game").then( r => {
             localStorage.setItem("gameId", r.data.gameId);
             this.setState({info : r.data});
             this.GetGameInfo(r.data);
