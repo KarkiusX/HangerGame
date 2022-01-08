@@ -152,7 +152,7 @@ export class Game extends React.Component {
                     {gameState === "Won" && <div>
                         <h4>Sveikiname, išvengiatė kartuvių!</h4>
                         <Link to={'/'}><button type="button" className="btn btn-outline-dark">Baigti žaidimą</button></Link>
-                        <button type="button" className="btn btn-outline-dark">Žaisti per naujo</button>
+                        <button type="button" className="btn btn-outline-dark" onClick={this.StartGame}>Žaisti per naujo</button>
                     </div>}
                     {gameState === "Lost" && <div>
                         <h4>Nepavyko išvengti kartuvių!</h4>
