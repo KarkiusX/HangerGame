@@ -1,6 +1,7 @@
 # Projektas "Hangman"
 
-Hangman žaidimas, serverinė dalis
+Hangman žaidimas, serverinė dalis.
+Klientinė dalis. https://github.com/KarkiusX/HangerGame/tree/Front
 
 ## Projekto paleidimas
 
