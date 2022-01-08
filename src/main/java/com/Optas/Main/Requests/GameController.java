@@ -7,26 +7,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class GameController {
 
-    @PostMapping("/game")
-    public ResponseEntity StartGame(HttpServletResponse response) throws JsonProcessingException {
+    @GetMapping(value = "/game", produces = "application/json")
+    public ResponseEntity StartGame() throws JsonProcessingException {
         String gameId = Instance.StartGame();
 
-        String gameInfo = Instance.GetGame(gameId).GetGameInfo(true);
+        String gameInfo = Instance.GetGame(gameId).GetGameInfoJson(true);
 
         if(gameInfo == null)
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(gameInfo);
     }
-    @PutMapping("/game")
-    public ResponseEntity PlayGame(@RequestBody Player player, HttpServletRequest request) throws JsonProcessingException
+    @PutMapping(value = "/game", produces = "application/json")
+    public ResponseEntity PlayGame(@RequestBody Player player) throws JsonProcessingException
     {
         if(player.getGuessingLetter().length() < 1)
             return ResponseEntity.notFound().build();
@@ -42,7 +40,7 @@ public class GameController {
 
         gameInfo.Guessed(word.charAt(0));
 
-        String gameData = gameInfo.GetGameInfo(false);
+        String gameData = gameInfo.GetGameInfoJson(false);
 
         if(gameInfo.GameFinished())
         {
@@ -56,7 +54,8 @@ public class GameController {
         return ResponseEntity.ok().build();
     }
     @GetMapping("/connect")
-    public ResponseEntity ConnectToGame(HttpServletRequest request){
-        return null;
+    public ResponseEntity ConnectToGame()
+    {
+        return ResponseEntity.ok().build();
     }
 }

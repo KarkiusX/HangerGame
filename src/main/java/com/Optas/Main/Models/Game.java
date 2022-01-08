@@ -3,7 +3,9 @@ package com.Optas.Main.Models;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Getter;
 
+@Getter
 public class Game {
 
     enum GameStates{
@@ -22,7 +24,6 @@ public class Game {
     private int guesses;
     private int incorrectGuesses;
 
-
     private String lettersGuessed;
 
 
@@ -32,7 +33,7 @@ public class Game {
 
         hangerInfo = WordCollection.SelectRandomHangerInfo();
 
-        revealedLetters = new char[hangerInfo.word.length];
+        revealedLetters = new char[hangerInfo.getWord().length];
 
         gameStates = GameStates.Started;
 
@@ -51,9 +52,9 @@ public class Game {
     {
         boolean guess = false;
         lettersGuessed += a + " ";
-        for(int i = 0; i < hangerInfo.word.length; i++)
+        for(int i = 0; i < hangerInfo.getWord().length; i++)
         {
-            if(hangerInfo.word[i] == a)
+            if(hangerInfo.getWord()[i] == a)
             {
                 guess = true;
 
@@ -66,24 +67,29 @@ public class Game {
             incorrectGuesses = guesses;
 
         tryFinishGame();
+
         return guess;
     }
     private void tryFinishGame()
     {
-        if(guesses == MAX_GUESSES)
+        boolean wonGame = true;
+        for(int i = 0; i < revealedLetters.length; i++)
+        {
+            if(revealedLetters[i] == 0)
+            {
+                wonGame = false;
+                break;
+            }
+        }
+        if(guesses == MAX_GUESSES && !wonGame)
         {
             gameStates = GameStates.Lost;
             return;
         }
-
-        for(int i = 0; i < revealedLetters.length; i++)
-        {
-            if(revealedLetters[i] == 0)
-                return;
-        }
-        gameStates = GameStates.Won;
+        if(wonGame)
+            gameStates = GameStates.Won;
     }
-    public String GetGameInfo(boolean includeId) throws JsonProcessingException {
+    public String GetGameInfoJson(boolean includeId) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         ObjectNode objectNode = objectMapper.createObjectNode();
@@ -94,13 +100,13 @@ public class Game {
         objectNode.put("Word", FormatCurrentProgress());
         objectNode.put("Guesses", guesses);
         objectNode.put("ig", incorrectGuesses);
-        objectNode.put("Description", hangerInfo.description);
+        objectNode.put("Description", hangerInfo.getDescription());
         objectNode.put("LettersGuessed", lettersGuessed);
         objectNode.put("GameState", gameStates.toString());
 
         if(gameStates == GameStates.Lost)
         {
-            objectNode.put("cw", String.valueOf(hangerInfo.word));
+            objectNode.put("cw", String.valueOf(hangerInfo.getWord()));
         }
 
         String jsonData = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode);
@@ -112,7 +118,7 @@ public class Game {
         String currentRevealedWord = "";
 
 
-        for(int i =0; i < hangerInfo.word.length; i++)
+        for(int i =0; i < hangerInfo.getWord().length; i++)
         {
             if(revealedLetters[i] != 0)
                 currentRevealedWord += revealedLetters[i];

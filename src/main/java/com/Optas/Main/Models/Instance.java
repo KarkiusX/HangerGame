@@ -23,6 +23,7 @@ public class Instance {
     public static void RemoveGame(String gameId) {
         if(!games.containsKey(gameId))
             return;
+
         games.remove(gameId);
     }
 }

@@ -1,9 +1,14 @@
 package com.Optas.Main.Models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
 public class HangerInfo {
 
-    public char[] word;
-    public String description;
+    private char[] word;
+    private String description;
 
     public HangerInfo(String word, String description)
     {
