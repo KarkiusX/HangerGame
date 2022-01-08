@@ -10,7 +10,6 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-  console.log(env);
   win.loadURL(dev ? "http://158.129.21.109:3000" : `file://${__dirname}/../build/index.html`)
 }
 
