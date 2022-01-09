@@ -54,7 +54,7 @@ public class Game {
         lettersGuessed += a + " ";
         for(int i = 0; i < hangerInfo.getWord().length; i++)
         {
-            if(hangerInfo.getWord()[i] == a)
+            if(hangerInfo.getWord()[i] == a && revealedLetters[i] == 0)
             {
                 guess = true;
 
