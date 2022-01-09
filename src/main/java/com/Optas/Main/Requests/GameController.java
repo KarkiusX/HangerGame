@@ -48,9 +48,13 @@ public class GameController {
         }
         return ResponseEntity.ok(gameData);
     }
-    @PutMapping("/disconnect")
+    @DeleteMapping("/disconnect")
     public ResponseEntity DisconnectFromGame(@RequestBody Player player){
-        Instance.RemoveGame(player.getGameId());
+        boolean removed = Instance.RemoveGame(player.getGameId());
+
+        if(!removed)
+            return ResponseEntity.notFound().build();
+
         return ResponseEntity.ok().build();
     }
     @GetMapping("/connect")

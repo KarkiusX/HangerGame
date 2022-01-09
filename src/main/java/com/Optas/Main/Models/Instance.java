@@ -20,10 +20,12 @@ public class Instance {
 
         return games.get(gameId);
     }
-    public static void RemoveGame(String gameId) {
+    public static boolean RemoveGame(String gameId) {
         if(!games.containsKey(gameId))
-            return;
+            return false;
 
         games.remove(gameId);
+
+        return true;
     }
 }
